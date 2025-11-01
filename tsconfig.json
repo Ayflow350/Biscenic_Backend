@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    /* =================================================================
+       MODULE SYSTEM & ENVIRONMENT
+       This is the core of the setup for a modern Node.js ESM project.
+    ================================================================== */
+    "target": "ES2022", // Compile to a recent, stable version of JavaScript.
+    "module": "ESNext", // Use the latest ECMAScript module syntax.
+    "moduleResolution": "Bundler", // ✅ THE KEY FIX: Allows extension-less imports like modern bundlers (and `tsx`).
+    "esModuleInterop": true, // Ensures compatibility between CommonJS and ES Module imports.
+    "types": ["node"], // Includes type definitions for the Node.js API (e.g., `process`, `Buffer`).
+
+    /* =================================================================
+       PROJECT STRUCTURE
+    ================================================================== */
+    "rootDir": "./src", // Specifies that all your source code is inside the 'src' folder.
+    "outDir": "./dist", // All compiled JavaScript output will go into the 'dist' folder.
+
+    /* =================================================================
+       STRICTNESS & CODE QUALITY
+    ================================================================== */
+    "strict": true, // Enables all strict type-checking options. (HIGHLY RECOMMENDED).
+    "forceConsistentCasingInFileNames": true, // Prevents bugs on case-sensitive file systems.
+    "noUncheckedIndexedAccess": true, // Adds ' | undefined' to array/object lookups to prevent runtime errors.
+
+    /* =================================================================
+       EMIT OPTIONS
+    ================================================================== */
+    "sourceMap": true, // Generates source maps (.map files) for easier debugging.
+    "declaration": false, // Set to `true` only if you're building a distributable library.
+
+    /* =================================================================
+       PERFORMANCE
+    ================================================================== */
+    "skipLibCheck": true // Skips type-checking of all declaration files (`.d.ts`) in `node_modules`.
+  },
+
+  /* =================================================================
+     PROJECT FILES
+     Tells TypeScript which files to include and exclude during compilation.
+  ================================================================== */
+  "include": ["src/**/*"], // Compile everything inside the `src` directory.
+  "exclude": ["node_modules", "dist"] // Ignore these folders.
+}
