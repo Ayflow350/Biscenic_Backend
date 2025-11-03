@@ -5,8 +5,9 @@
        This is the core of the setup for a modern Node.js ESM project.
     ================================================================== */
     "target": "ES2022", // Compile to a recent, stable version of JavaScript.
-    "module": "ESNext", // Use the latest ECMAScript module syntax.
-    "moduleResolution": "Bundler", // ✅ THE KEY FIX: Allows extension-less imports like modern bundlers (and `tsx`).
+    "module": "CommonJS", // MUST be CommonJS
+    "moduleResolution": "node", // Use the latest ECMAScript module syntax.
+
     "esModuleInterop": true, // Ensures compatibility between CommonJS and ES Module imports.
     "types": ["node"], // Includes type definitions for the Node.js API (e.g., `process`, `Buffer`).
 

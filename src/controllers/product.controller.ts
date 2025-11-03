@@ -17,7 +17,6 @@ export const createProductHandler = async (req: Request, res: Response) => {
   try {
     const validated = productSchema.parse(req.body);
 
-    // ✅ Ensure all required arrays exist & availabilityStatus is valid
     const productData = {
       ...validated,
       availabilityStatus: normalizeAvailabilityStatus(
@@ -71,7 +70,7 @@ export const updateProductHandler = async (req: Request, res: Response) => {
           validated.availabilityStatus
         ),
       }),
-      // ✅ Prevent undefined arrays during partial updates
+
       ...(validated.materialOptions && {
         materialOptions: validated.materialOptions ?? [],
       }),
