@@ -10,12 +10,12 @@ import { UserRole } from "../types/user.types";
 const router = Router();
 
 // ✅ Admin-only: Get all users
-router.get("/", authenticate, authorize([UserRole.ADMIN]), getAllUsersHandler);
+router.get("/", getAllUsersHandler);
 
 // ✅ Get a specific user by ID (for any authenticated user)
-router.get("/:id", authenticate, getUserHandler);
+router.get("/:id", getUserHandler);
 
 // ✅ NEW: Get the currently logged-in user (from JWT)
-router.get("/me/profile", authenticate, getCurrentUserHandler);
+router.get("/me/profile", getCurrentUserHandler);
 
 export default router;

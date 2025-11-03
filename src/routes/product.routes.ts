@@ -14,22 +14,22 @@ const router = Router();
 // Only admin can create, update or delete
 router.post(
   "/",
-  authenticate,
-  authorize([UserRole.ADMIN]),
+  // authenticate,
+  // authorize([UserRole.ADMIN]),
   createProductHandler
 );
 router.get("/", getAllProductsHandler);
 router.get("/:id", getProductHandler);
 router.put(
   "/:id",
-  authenticate,
-  authorize([UserRole.ADMIN]),
+  // authenticate,
+  // authorize([UserRole.ADMIN]),
   updateProductHandler
 );
 router.delete(
   "/:id",
-  authenticate,
-  authorize([UserRole.ADMIN]),
+  // authenticate,
+  // authorize([UserRole.ADMIN]),
   deleteProductHandler
 );
 
