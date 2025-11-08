@@ -30,6 +30,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://your-production-frontend.vercel.app",
+      "https://biscenic-leun.vercel.app/",
     ],
     credentials: true,
   })
