@@ -9,14 +9,15 @@ import morgan from "morgan"; // Moved morgan import to the top for consistency
 import cookieParser from "cookie-parser"; // Import cookie-parser
 
 // --- Custom Internal Imports ---
-import connectDB from "./config/db.config.js";
-import errorHandler from "./config/middleware/error.middleware.js";
+import connectDB from "./config/db.config";
+import errorHandler from "./config/middleware/error.middleware";
 
 // --- Route Imports ---
-import authRoutes from "./routes/auth.route.js";
-import userRoutes from "./routes/user.route.js";
-import productRoutes from "./routes/product.routes.js";
-import collectionRoutes from "./routes/collection.routes.js";
+import authRoutes from "./routes/auth.route";
+import userRoutes from "./routes/user.route";
+import productRoutes from "./routes/product.routes";
+import collectionRoutes from "./routes/collection.routes";
+import paymentRoutes from "./routes/payment.routes";
 
 // --- Initializations ---
 dotenv.config();
@@ -64,6 +65,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/collections", collectionRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // --- Error Handling ---
 // This should be the last middleware in the chain

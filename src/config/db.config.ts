@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import colors from "colors";
-import config from "./index.js"; // Imports the config we just defined
+import config from "./index"; // Imports the config we just defined
 
 const connectDB = async () => {
   try {

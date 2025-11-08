@@ -25,8 +25,6 @@ export const signInHandler = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await userService.findUserByEmail(email);
 
-    // The findUserByEmail service already throws an error if user not found,
-    // so this check is redundant, but we can leave it for clarity.
     if (!user) {
       return res
         .status(401)
@@ -40,41 +38,33 @@ export const signInHandler = async (req: Request, res: Response) => {
         .json({ message: "Invalid credentials. Please try again." });
     }
 
-    // --- MODIFICATION STARTS HERE ---
-
-    // 1. Create a cleaner payload for the JWT
+    // ✅ Your desired payload
     const payload = {
       id: user._id,
-      name: user.name, // Add name for easy access on the frontend
+      name: user.name,
       email: user.email,
       role: user.role,
     };
 
-    // 2. Sign the token
+    // Sign JWT with payload
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: "1d" });
 
-    // 3. Set the token in an HTTP-Only cookie instead of the JSON body
+    // Set HTTP-only cookie for secure auto-inclusion
     res.cookie("auth-token", token, {
-      httpOnly: true, // Crucial for security: prevents JS access
-      secure: process.env.NODE_ENV === "production", // Use HTTPS in production
-      sameSite: "strict", // Helps prevent CSRF attacks
-      maxAge: 24 * 60 * 60 * 1000, // 1 day, matches token expiry
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
       path: "/",
     });
 
-    // 4. Send the user data (without password) back in the JSON body
-    // This allows the frontend to immediately update its state (e.g., AuthContext)
-    const { password: _, ...userWithoutPassword } = user.toObject();
-
+    // Send the payload + token in JSON response so frontend can store it
     res.status(200).json({
       message: "Login successful",
-      user: userWithoutPassword, // The user object is still sent
+      user: payload,
+      token,
     });
-
-    // --- MODIFICATION ENDS HERE ---
   } catch (error: any) {
-    // Your findUserByEmail service throws an error, which will be caught here.
-    // The message "Invalid credentials..." is appropriate.
     res.status(401).json({ message: error.message });
   }
 };
