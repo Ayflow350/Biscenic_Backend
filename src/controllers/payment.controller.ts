@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import axios from "axios";
 import { isValidCurrency } from "../utils/currency.utils";
 import { CURRENCY_CONFIG } from "../config/currency.config";
+import { OrderService } from "../services/order.service";
 const { v4: uuidv4 } = require("uuid");
 import Flutterwave from "flutterwave-node-v3";
 
@@ -56,7 +57,7 @@ export const initiatePayment = async (
           tx_ref,
           amount,
           currency: currency.toUpperCase(),
-          redirect_url: "http://localhost:3000/checkout",
+          redirect_url: "http://localhost:3000/order-success",
           customer: {
             email,
             name,
@@ -65,7 +66,7 @@ export const initiatePayment = async (
           customizations: {
             title: "Biscenic Store",
             description: "Payment for items in your cart",
-            logo: "https://biscenic.com/logo.png", // Optional: Replace with your actual logo URL
+            logo: "/Biscenic.PNG", // Optional: Replace with your actual logo URL
           },
         };
 
@@ -226,6 +227,37 @@ export const verifyPayment = async (
     console.error("Payment verification error:", error.message);
     res.status(500).json({
       message: "Failed to verify payment",
+      data: null,
+      error: error.message,
+    });
+  }
+};
+
+// Define the new controller function
+export const createOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  // OrderData includes customerInfo, shippingInfo, items, totalAmount, paymentMethod, and paymentDetails (if paid).
+  const orderData = req.body;
+  // const userId = req.user?.id; // Assuming user is authenticated and on req.user
+
+  try {
+    // Call the service layer to handle DB save and emails
+    const result = await OrderService.createOrderAndNotify(
+      orderData /*, userId */
+    );
+
+    res.status(200).json({
+      message: "Order created successfully and confirmation emails sent.",
+      data: { orderId: result.orderId },
+      error: null,
+    });
+  } catch (error: any) {
+    console.error("Order creation final handler error:", error.message);
+    res.status(500).json({
+      message: "Failed to create order and send confirmation emails.",
       data: null,
       error: error.message,
     });
