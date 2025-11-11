@@ -57,7 +57,7 @@ export const initiatePayment = async (
           tx_ref,
           amount,
           currency: currency.toUpperCase(),
-          redirect_url: "http://localhost:3000/order-success",
+          redirect_url: "https://biscenic-leun.vercel.app/order-success",
           customer: {
             email,
             name,
