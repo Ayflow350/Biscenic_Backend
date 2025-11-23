@@ -29,7 +29,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://your-production-frontend.vercel.app",
+      "https://www.biscenic.com",
       "https://biscenic-leun.vercel.app",
     ],
     credentials: true,
